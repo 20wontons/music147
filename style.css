@@ -1,0 +1,9 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: aliceblue;
+    text-align: center;
+}
+
+hr {
+    width: 50%;
+}
