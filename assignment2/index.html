@@ -1,40 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>MUS147 - Assignment 2</title>
-    <link href="assignment2.css" rel="stylesheet" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  </head>
-  <body>
-    <h1>Programming Assignment 2</h1>
-    <h3>Create a jingle!</h3>
-    <div>
-      <center>
-        <button type="button" id="play" value="start" onclick="start()">Play Jingle</button>
-        <button type="button" id="clear" value="clear" onclick="clearSequence()">Clear</button>
-      </center>
+
+<head>
+  <title>MUS147 - Assignment 2</title>
+  <link href="assignment2.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+  <div id="page-container">
+    <div id="content-wrap">
+      <h1>Programming Assignment 2</h1>
+      <h3>Create a jingle!</h3>
+      <div>
+        <center>
+          <button type="button" id="play" value="start" onclick="start()">Play Jingle</button>
+          <button type="button" id="clear" value="clear" onclick="clearSequence()">Clear</button>
+        </center>
+        <form class="center">
+          <label for="db">Volume:</label>
+          <input type="range" id="db" name="db" value=-20 min=-60 max=0 step=1 oninput="setAmplitude(value)">
+          <!-- <br><span id="amplitude">-20</span> dB -->
+        </form>
+      </div>
+      <hr />
+      <div>
+        <center>
+          <table id="notes">
+            <tbody>
+              <tr>
+                <td>&nbsp;</td>
+                <td><button type="button" class="noteBtn" id="C">C</button></td>
+                <td><button type="button" class="noteBtn" id="D">D</button></td>
+                <td><button type="button" class="noteBtn" id="E">E</button></td>
+                <td><button type="button" class="noteBtn" id="F">F</button></td>
+                <td><button type="button" class="noteBtn" id="G">G</button></td>
+                <td><button type="button" class="noteBtn" id="A">A</button></td>
+                <td><button type="button" class="noteBtn" id="B">B</button></td>
+                <td>&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </center>
+      </div>
     </div>
-    <hr/>
-    <div>
-      <center>
-        <table class="notes">
-          <tbody>
-            <tr>
-              <td><button type="button" class="noteBtn" id="C">C</button></td>
-              <td><button type="button" class="noteBtn" id="D">D</button></td>
-              <td><button type="button" class="noteBtn" id="E">E</button></td>
-              <td><button type="button" class="noteBtn" id="F">F</button></td>
-              <td><button type="button" class="noteBtn" id="G">G</button></td>
-              <td><button type="button" class="noteBtn" id="A">A</button></td>
-              <td><button type="button" class="noteBtn" id="B">B</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </center>
+    <div id="footer">
+      <hr />
+      <p>
+        <a href="https://20wontons.github.io">Website Home</a> | <a href="https://github.com/20wontons">Github Home</a>
+        | <a href="../index.html">MUSIC147 Home</a> | <a href="https://github.com/20wontons/music147">MUSIC147
+          Github</a>
+        <br /><i>Updated 2024/01/18. Antoine Nguyen.<br />Computer Science and Engineering, B.S., UCI 2024</i>
+      </p>
     </div>
-    <!-- TODO: display sequence -->
-    <!-- https://stackoverflow.com/questions/6473111/add-delete-table-rows-dynamically-using-javascript -->
-    <script src="audio.js"></script>
-  </body>
+  </div>
+  <script src="audio.js"></script>
+</body>
+
 </html>

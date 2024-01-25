@@ -1,2 +1,12 @@
 @import "../style.css";
 
+.noteBtn {
+    width: 30px;
+    height: 20px;
+}
+
+.noteCell {
+    width: 30px;
+    height: 20px;
+    background-color: brown;
+}
