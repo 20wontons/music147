@@ -4,13 +4,18 @@ var sequence = [];
 
 var isPlaying = false;
 var ctx = new (window.AudioContext || window.webkitAudioContext)();
-var pianoSound = new Audio("./PianoA.mp3");
+// var pianoSound = new Audio("./PianoA.mp3");
+// pianoSound.crossOrigin = "anonymous";
+const audio = document.getElementById("soundfile");
+audio.setAttribute("src", "200174__bronxio__drumloop-classic-breakbeat-amen-break-at-120-bpm.wav");
+audio.setAttribute("loop", true)
 var osc;
 var amp = ctx.createGain();
 var amplitude = 0.1;
-amp.gain.value = amplitude;
-var source = ctx.createMediaElementSource(pianoSound);
-source.connect(amp);
+audio.volume = 20/60.0;
+amp.gain.value = 0;
+// var source = ctx.createMediaElementSource(pianoSound);
+// source.connect(amp);
 osc = ctx.createOscillator();
 osc.connect(amp);
 osc.start(ctx.currentTime);
@@ -31,12 +36,16 @@ function dbtoa(decibels) {
 function setAmplitude(value) {
     if (value == -60) {
         amplitude = 0.0;
+        audio.volume = 0;
     }
     else {
         amplitude = dbtoa(value);
+        audio.volume = value/-60.0;
     }
+    console.log(amplitude)
+    
     amp.gain.linearRampToValueAtTime(amplitude, ctx.currentTime+0.1);
-    document.getElementById("amplitude").innerText = value;
+    // document.getElementById("amplitude").innerText = value;
 }
 
 /**
@@ -91,7 +100,7 @@ function start() {
         ctx.resume();
         amp.gain.linearRampToValueAtTime(amplitude, ctx.currentTime+0.1);
 
-        pianoSound.play()
+        audio.play()
         play(sequence, 0, 250)
 
         setTimeout(function() {
@@ -99,6 +108,7 @@ function start() {
             amp.gain.linearRampToValueAtTime(0., ctx.currentTime+0.1);
             setTimeout(function() {
                 ctx.suspend();
+                audio.pause();
             }, 125);
             btn.disabled = false
             btn.innerHTML = "Play Jingle"
@@ -109,7 +119,7 @@ function start() {
 }
 
 function noteClick(event) {
-    console.log(event.currentTarget.note);
+    // console.log(event.currentTarget.note);
     sequence.push(event.currentTarget.note);
     addRow(event.currentTarget.pos);
 }
