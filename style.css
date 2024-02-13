@@ -5,20 +5,23 @@ body {
 }
 
 hr {
-    width: 50%;
+    width: 45vw;
 }
 
 #page-container {
     position: relative;
+    display: flex;
+    justify-content: center;
     min-height: 95vh;
 }
 #content-wrap {
     padding-bottom: 5rem;
+    width: 50vw;
 }
 
 #footer {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 100vw;
     height: 5rem;
 }
