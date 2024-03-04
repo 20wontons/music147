@@ -1,0 +1,99 @@
+<script>
+    //https://developers.google.com/apps-script/guides/html/best-practices#stylesheet.html
+    // WebAudioAPI
+    function playButton() {
+        google.script.run.withSuccessHandler(start).getSequence();
+    }
+
+
+    var bpm = document.getElementById("bpm").value;
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc;
+    var amp;
+
+    function setBpm() {
+        bpm = document.getElementById("bpm").value;
+        console.log("BPM: " + bpm)
+    }
+
+    function createTone(note, amplitude) { //TODO: create osc for each note, rather than change pitch.
+        osc = ctx.createOscillator();
+        osc.frequency.setValueAtTime(mtof(note), ctx.currentTime);
+        amp = ctx.createGain();
+        amp.gain.value = amplitude;
+        amp.connect(ctx.destination);
+        osc.connect(amp);
+        return osc;
+    }
+
+    function mtof(midi) {
+        return 440.0 * Math.pow(2.0, (midi - 69.0) / 12.0);
+    }
+
+    /**
+     * Converts from velocity (0-127) to amplitude (0.-1.)
+     */
+    function vtoa(velocity) {
+        return Math.min(velocity, 127.0) / 127.0;
+    }
+
+    function bpmToMs(bpm) {
+        return 60000.0 / bpm
+    }
+
+    /**
+     * Creates oscillators for each note and plays the sequence of notes
+     */
+    function play(seq, i, dur) {
+        // FIXME: https://stackoverflow.com/questions/59347938/webaudio-playing-two-oscillator-sounds-in-a-same-time-causes-vibration-sound
+        if (i % 2 === 0) { google.script.run.colorTime(i + 1, "#F4CCCC") }
+
+        // for each row j, createTone(j+1) and set amplitude of tone to seq[i][j]
+        var chord = [];
+        for (var j = 0; j < seq[i].length; j++) {
+            var v = parseInt(seq[i][j]);
+            if (v) {
+                chord.push(createTone(j + 1, vtoa(v / 3)));
+                // console.log(vtoa(v/3) + " : col" + i + " row" + j)
+            }
+        }
+
+
+        for (var k = 0; k < chord.length; k++) {
+            chord[k].start(ctx.currentTime);
+        }
+
+        setTimeout(function () {
+            if (i % 2 === 1) { google.script.run.colorTime(i, null) }
+            for (var k = 0; k < chord.length; k++) {
+                chord[k].stop(ctx.currentTime);
+            }
+            if (seq[i + 1]) {
+                play(seq, i + 1, dur)
+            }
+        }, dur)
+        return true
+    }
+
+    function start(sequence) {
+        if (sequence.length > 0) {
+            var btn = document.getElementById("play");
+            btn.disabled = true
+            btn.value = "Playing..."
+            ctx.resume();
+
+            play(sequence, 0, bpmToMs(bpm * 2))
+
+            setTimeout(function () {
+                setTimeout(function () {
+                    ctx.suspend();
+                }, 125);
+                btn.disabled = false
+                btn.value = "Play"
+            }, bpmToMs(bpm * 2) * sequence.length - 1)
+        } else {
+            window.alert("Your jingle is empty!")
+        }
+    }
+
+</script>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+<div class="sidebar branding-below">
+  BPM: <input id="bpm" type="number" value="120" onchange="setBpm()" />
+  <br/>
+  <input type="button" id="play" class="button" value="Play" onclick="playButton();" />
+</div>
+
+<?!= include('JavaScript'); ?>
+</body>
+</html>
