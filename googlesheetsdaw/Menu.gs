@@ -1,4 +1,4 @@
-var SIDEBAR_TITLE = 'Google Sheets Studio';
+var SIDEBAR_TITLE = 'GoogleSheets Studio';
 
 /**
  * Adds a custom menu with items to show the sidebar and dialog.
@@ -8,7 +8,7 @@ var SIDEBAR_TITLE = 'Google Sheets Studio';
 function onOpen(e) {
   SpreadsheetApp.getUi()
       .createAddonMenu()
-      .addItem('Show sidebar', 'showSidebar')
+      .addItem('Start', 'showSidebar')
       .addToUi();
 }
 
@@ -32,6 +32,7 @@ function showSidebar() {
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setTitle(SIDEBAR_TITLE);
   SpreadsheetApp.getUi().showSidebar(ui);
+  formatSheet();
 }
 
 function include(filename) {
